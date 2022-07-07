@@ -30,7 +30,7 @@ module.exports = (err, req, res, next) => {
         }
 
         // Handle mongoose duplicate key error
-        if(err.code === 11000) {
+        if(err.code === 'E11000') {
             const message = `Duplicate ${Object.keys(err.keyValue)} entered.`
             error = new ErrorHandler(message, 500);
         }

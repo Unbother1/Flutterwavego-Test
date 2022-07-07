@@ -17,12 +17,18 @@ const getAllFees = (req, res) => {
 // @desc    Create new Fee
 // @route   POST /fees
 // @access  Public
-const postFees = (req, res) => {
+const postFees = catchAsyncErrors(async (req, res, next) => {
+    console.log(req.body)
+  // Adding user to body
+
+  const fees = await Fees.create(req.body);
+
   res.status(200).json({
     success: true,
-    message: "This is create fees",
+    message: "Job Created.",
+    data: fees,
   });
-};
+})
 
 // @desc    Get the slit fees
 // @route   GET /split-payments/compute
