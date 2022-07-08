@@ -3,7 +3,7 @@ const ErrorHandler = require('../utils/errorHandler');
 module.exports = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
 
-    if(process.env.NODE_ENV === 'developmetn') {
+    if(process.env.NODE_ENV === 'development') {
         res.status(err.statusCode).json({
             success: false,
             error: err,
@@ -30,7 +30,7 @@ module.exports = (err, req, res, next) => {
         }
 
         // Handle mongoose duplicate key error
-        if(err.code === 'E11000') {
+        if(err.code === 11000) {
             const message = `Duplicate ${Object.keys(err.keyValue)} entered.`
             error = new ErrorHandler(message, 500);
         }

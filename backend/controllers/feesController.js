@@ -7,17 +7,19 @@ const Fees = require('../models/feeModel');
 // @desc    Get all fees
 // @route   GET /fees
 // @access  Public
-const getAllFees = (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "This is to get all files",
-  });
-};
+const getAllFees = catchAsyncErrors( async (req, res, next) => {
+   const fetchAll = await Fees.find();
+  res.status(200).json({ 
+    status: true,
+    results:fetchAll.length,
+    data: fetchAll 
+});
+});
 
 // @desc    Create new Fee
 // @route   POST /fees
 // @access  Public
-const postFees = catchAsyncErrors(async (req, res, next) => {
+const postFees = catchAsyncErrors( async (req, res, next) => {
     console.log(req.body)
   // Adding user to body
 
@@ -28,28 +30,36 @@ const postFees = catchAsyncErrors(async (req, res, next) => {
     message: "Job Created.",
     data: fees,
   });
-})
+});
 
 // @desc    Get the slit fees
 // @route   GET /split-payments/compute
 // @access  Public
-const postFeeComputation = (req, res) => {
+const postFeeComputation = catchAsyncErrors( async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "This is to perform computation",
   });
-};
+});
 
 
 // @desc    Delete Fees
 // @route   DELETE /fees
 // @access  Public
-const deleteFees = (req, res) => {
+const deleteFees = catchAsyncErrors( async (req, res, next) => {
+  const fees = await Fees.findById(req.params.id)
+
+  if(!fees) {
+    return next(new ErrorHandler("Fee not found", 404));
+  }
+
+  job = await fees.remove()
+
   res.status(200).json({
     success: true,
-    message: "This is to delete fees",
+    message: 'Fee is deleted.'
   });
-};
+});
 
 module.exports = {
   getAllFees,

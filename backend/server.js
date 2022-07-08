@@ -29,6 +29,8 @@ app.use(express.json());
 // Setup cors to manage different ports 
 app.use(cors());
 
+
+
 app.use(feesRouter);
 
 // Handle unhandled routes
