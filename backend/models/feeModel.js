@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const feeSchema = mongoose.Schema({
-    id: {
+    ID: {
         type: Number,
         required: [true, "Please enter the ID number"],
         unique: true,
@@ -20,9 +20,9 @@ const feeSchema = mongoose.Schema({
         unique: true,
         validate: [validator.isEmail, "Please enter a valid email address"]
     },
-    SplitEntityId: {
-        type: String,
-        required: [true, "Please enter the SplitEntityID"],
+    SplitInfo: {
+        type: [],
+        required: [true, "Please enter the SplitInfo"],
         unique:true
     },
     createdAt: {
