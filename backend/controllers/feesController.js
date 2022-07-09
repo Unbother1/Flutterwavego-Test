@@ -4,7 +4,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Calculate = require("../controllers/paymentCompute");
 
 const Fees = require("../models/feeModel");
-const dataController = require("./paymentController");
+
 
 // @desc    Get all fees
 // @route   GET /fees
@@ -41,7 +41,7 @@ const postFeeComputation = catchAsyncErrors( async (req, res, next) => {
     const { ID, Amount, Currency, CustomerEmail, SplitInfo, Balance, SplitBreakdown } = Calculate.Data(req.body);  
     const fees = await Fees.find({"ID":req.body.ID});
     let Transaction;
-    if (fees !== null) {
+    if (fees.length > 0) {
         Transaction = fees;
     } else {
         Transaction = await Fees.create({
