@@ -23,7 +23,6 @@ const feeSchema = mongoose.Schema({
     SplitInfo: {
         type: [],
         required: [true, "Please enter the SplitInfo"],
-        unique:true
     },
     createdAt: {
         type: Date,

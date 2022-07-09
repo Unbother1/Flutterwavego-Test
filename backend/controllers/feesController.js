@@ -38,28 +38,19 @@ const postFees = catchAsyncErrors(async (req, res, next) => {
 // @route   GET /split-payments/compute
 // @access  Public
 const postFeeComputation = catchAsyncErrors( async (req, res, next) => {
-    const { ID, Amount, Currency, CustomerEmail, SplitInfo, Balance, SplitBreakdown } = Calculate.Data(req.body);  
+    const { Balance, SplitBreakdown } = Calculate.Data(req.body);  
     const fees = await Fees.find({"ID":req.body.ID});
     let Transaction;
+    console.log(fees.length);
     if (fees.length > 0) {
         Transaction = fees;
     } else {
-        Transaction = await Fees.create({
-        ID,
-        Amount,
-        Currency,
-        CustomerEmail,
-        SplitInfo,
-      });
-      console.log("Data Saved")
+        Transaction = await Fees.create(req.body);
+        console.log("Data is Saved");
     }
-
-    const data = Transaction;
-
+    const data = Transaction[0];
     res.status(200).json({
-        ID: data._id,
-        Currency, 
-        CustomerEmail,
+        ID: data.ID,
         Balance: Balance,
         SplitBreakdown: SplitBreakdown,
     });
