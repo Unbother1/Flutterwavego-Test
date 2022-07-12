@@ -21,7 +21,6 @@ const getAllFees = catchAsyncErrors(async (req, res, next) => {
 // @route   POST /fees
 // @access  Public
 const postFees = catchAsyncErrors(async (req, res, next) => {
-  console.log(req.body);
   // Adding user to body
 
   const fees = await Fees.create(req.body);

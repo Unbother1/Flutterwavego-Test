@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node backend/server.js",
-    "dev": "nodemon backend/server.js",
-    "prod": "SET NODE_ENV=production & node backend/server.js"
+    "dev": "SET NODE_ENV=development & nodemon backend/server.js"
   },
   "keywords": [
     "LannisterPay",
