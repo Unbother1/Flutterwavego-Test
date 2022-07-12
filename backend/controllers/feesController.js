@@ -2,7 +2,6 @@
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Calculate = require("../controllers/paymentCompute");
-
 const Fees = require("../models/feeModel");
 
 
@@ -38,16 +37,18 @@ const postFees = catchAsyncErrors(async (req, res, next) => {
 // @route   GET /split-payments/compute
 // @access  Public
 const postFeeComputation = catchAsyncErrors( async (req, res, next) => {
-    const { Balance, SplitBreakdown } = Calculate.Data(req.body);  
+    const { Balance, SplitBreakdown } = Calculate.Data(req.body);
+    // await Fees.findOneAndUpdate({"Amount":req.body.Amount},{Amount:Balance}, {new:true});
     const fees = await Fees.find({"ID":req.body.ID});
     let Transaction;
-    console.log(fees.length);
+
     if (fees.length > 0) {
         Transaction = fees;
     } else {
         Transaction = await Fees.create(req.body);
         console.log("Data is Saved");
     }
+
     const data = Transaction[0];
     res.status(200).json({
         ID: data.ID,
