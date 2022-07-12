@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 
 const dotenv = require('dotenv').config();
+const mongoSanitize = require('express-mongo-sanitize');
+const xssClean = require('xss-clean');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
@@ -26,6 +28,13 @@ connectDatabase();
 // Set up body parser 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.json());
+
+// Sanitize data
+app.use(mongoSanitize());
+
+// Prevent XSS attacks
+app.use(xssClean());
+
 // Setup cors to manage different ports 
 app.use(cors());
 
